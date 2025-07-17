@@ -1,0 +1,72 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import NewTask from "../NewTasx";
+import UseGeneratedId from "../../hooks/generateId";
+import { useUserContext } from "../../hooks/useUserContext";
+
+export const TaskSchema = z.object({
+  title: z.string(),
+  taskInfo: z.string(),
+  priority: z.enum(["Extreme", "Moderate", "Low"]),
+  date: z.string(),
+  status: z.enum(["Not Started", "In Progress", "Completed"]),
+  id: z.number(),
+  // image: z
+  //   .instanceof(File)
+  //   .refine((file) => file.type.startsWith("image/"), {
+  //     message: "File must be an image",
+  //   })
+  //   .refine((file) => file.size <= 2 * 1024 * 1024, {
+  //     // 2MB
+  //     message: "Image must be less than 2MB",
+  //   })
+  //   .optional(),
+});
+
+const TaskFormSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  taskInfo: z.string().min(1, "Task information is required"),
+  priority: z.enum(["Extreme", "Moderate", "Low"], {
+    required_error: "A priority is needed",
+  }),
+  date: z.string({
+    required_error: "A date is required",
+  }),
+  status: z.enum(["Not Started", "In Progress", "Completed"]),
+  id: z.number(),
+  // image: z
+  //   .instanceof(File)
+  //   .refine((file) => file.type.startsWith("image/"), {
+  //     message: "File must be an image",
+  //   })
+  //   .refine((file) => file.size <= 2 * 1024 * 1024, {
+  //     // 2MB
+  //     message: "Image must be less than 2MB",
+  //   })
+  //   .optional(),
+});
+
+interface AuthFormProps {
+  taskId: number | undefined;
+}
+
+export type TaskSchemaType = z.infer<typeof TaskSchema>;
+export type TaskFormSchemaType = z.infer<typeof TaskFormSchema>;
+
+export default function AuthTask({ taskId }: AuthFormProps) {
+  const { tasks } = useUserContext();
+  const task = tasks.find((t) => t.id === taskId);
+  const form = useForm<TaskFormSchemaType>({
+    resolver: zodResolver(TaskFormSchema),
+    defaultValues: task ?? {
+      title: "Intermediate React",
+      taskInfo:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit voluptate maxime deserunt assumenda commodi quis consequuntur dolor ea illum eius. Atque autem dolore ut eos eaque pariatur quaerat asperiores dignissimos.",
+      priority: "Extreme",
+      status: "Not Started",
+      id: UseGeneratedId(),
+    },
+  });
+  return <NewTask form={form} taskId={taskId} />;
+}
