@@ -12,16 +12,6 @@ export const TaskSchema = z.object({
   date: z.string(),
   status: z.enum(["Not Started", "In Progress", "Completed"]),
   id: z.number(),
-  // image: z
-  //   .instanceof(File)
-  //   .refine((file) => file.type.startsWith("image/"), {
-  //     message: "File must be an image",
-  //   })
-  //   .refine((file) => file.size <= 2 * 1024 * 1024, {
-  //     // 2MB
-  //     message: "Image must be less than 2MB",
-  //   })
-  //   .optional(),
 });
 
 const TaskFormSchema = z.object({
@@ -35,16 +25,6 @@ const TaskFormSchema = z.object({
   }),
   status: z.enum(["Not Started", "In Progress", "Completed"]),
   id: z.number(),
-  // image: z
-  //   .instanceof(File)
-  //   .refine((file) => file.type.startsWith("image/"), {
-  //     message: "File must be an image",
-  //   })
-  //   .refine((file) => file.size <= 2 * 1024 * 1024, {
-  //     // 2MB
-  //     message: "Image must be less than 2MB",
-  //   })
-  //   .optional(),
 });
 
 interface AuthFormProps {

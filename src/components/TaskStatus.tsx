@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ClipboardCheck } from "lucide-react";
 import { useUserContext } from "../hooks/useUserContext";
-import StatusBar from "./StatusBar";
+import {StatusBar} from "./StatusBar";
 
 export default function TasksStatus() {
   const { tasks } = useUserContext();

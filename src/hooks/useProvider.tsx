@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import type { UserSchemaType } from "../components/auth/UserAuth";
 import { UserContext } from "./useUserContext";
 import type { TaskSchemaType } from "../components/auth/AuthTask";
+import { useNavigate } from "react-router-dom";
 
 export default function UseProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const navigate = useNavigate()
   const [userData, setUserData] = useState<UserSchemaType>(() => {
     const userInfo = localStorage.getItem("userData");
     return userInfo
@@ -45,6 +47,10 @@ export default function UseProvider({
         return "text-blue-300";
     }
   }
+
+  function handleViewTask(id?: number ){
+    navigate(`/viewtask?id=${id}`)
+  }
   return (
     <UserContext
       value={{
@@ -56,6 +62,7 @@ export default function UseProvider({
         setCreateTask,
         handleSetPriorityClr,
         handleSetClr,
+        handleViewTask,
       }}
     >
       {children}

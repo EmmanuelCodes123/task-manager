@@ -15,7 +15,6 @@ import { Button } from "./ui/button";
 
 import { Textarea } from "./ui/textarea";
 import { useUserContext } from "../hooks/useUserContext";
-import { Image } from "lucide-react";
 
 type NewFormProps = {
   form: UseFormReturn<TaskFormSchemaType>;
@@ -23,38 +22,50 @@ type NewFormProps = {
 };
 
 export default function NewTask({ form, taskId }: NewFormProps) {
-  const { setTasks, setCreateTask, tasks } = useUserContext();
+  const { setTasks, setCreateTask, tasks, createTask } = useUserContext();
 
   function onSubmit(data: TaskFormSchemaType) {
     const parsedFormData = TaskSchema.safeParse(data);
     if (parsedFormData.success) {
       if (taskId === undefined) {
         setTasks((prev) => [...prev, parsedFormData.data]);
+        console.log("success1");
       } else {
         const updatedTasks = tasks.map((t) =>
           t.id === taskId ? { ...t, ...parsedFormData.data } : t
         );
         setTasks(updatedTasks);
+        console.log("success");
+        setCreateTask(false);
+        console.log(createTask);
+        
       }
       setCreateTask(false);
+    } else {
+      console.log("not parsed", parsedFormData);
     }
-    console.log("not parsed");
   }
 
   return (
-    <div className="w-full h-screen absolute right-0 left-0 top-0 bottom-0 z-100 flex items-center justify-center">
-      <div className="w-full h-full absolute bg-black opacity-50 z-50"></div>
+    <div className="w-full h-screen absolute right-0 left-0 top-0 bottom-0 z-200 flex items-center justify-center">
+      <div className="hidden lg:block w-full h-full absolute bg-black opacity-50 z-50"></div>
 
-      <div className="bg-white z-100 w-170 h-fit rounded-2xl p-6">
-        <header className="flex justify-between mb-4">
-          <h2 className="underline-offset-2 ">New Task</h2>
-          <h2 className="cursor-pointer" onClick={() => setCreateTask(false)}>
+      <div className="bg-white z-100 lg:w-170 w-full lg:h-145 mt-auto h-screen rounded-2xl lg:p-6 p-2">
+        <header className="flex justify-between mb-4 lg:mt-0 mt-3">
+          <h2 className="underline-offset-2 text-red-400">New Task</h2>
+          <h2
+            className="cursor-pointer"
+            onClick={() => {
+              setCreateTask(false);
+              console.log(createTask);
+            }}
+          >
             Go Back
           </h2>
         </header>
         <Form {...form}>
           <form
-            className="border-2 rounded border-gray-200 p-2 flex relative"
+            className="lg:border-2 rounded border-gray-200 p-2 flex relative lg:h-125 h-160"
             onSubmit={form.handleSubmit(onSubmit)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -129,7 +140,7 @@ export default function NewTask({ form, taskId }: NewFormProps) {
                 control={form.control}
                 name="taskInfo"
                 render={({ field }) => (
-                  <FormItem className="w-100 ">
+                  <FormItem className="w-80 ">
                     <FormLabel>TaskInfo</FormLabel>
                     <FormControl>
                       <Textarea

@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Cell, Pie, PieChart } from "recharts";
 
 interface StatusBarProps {
@@ -9,7 +10,7 @@ interface StatusBarProps {
   innerRadius: number;
   outerRadius: number;
 }
-export default function StatusBar({
+export const StatusBar = memo(function StatusBar({
   chartData,
   width,
   height,
@@ -33,4 +34,4 @@ export default function StatusBar({
       </Pie>
     </PieChart>
   );
-}
+})

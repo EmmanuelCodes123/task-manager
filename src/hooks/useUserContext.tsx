@@ -10,7 +10,8 @@ export interface UserContextType {
   createTask: boolean;
   setCreateTask: React.Dispatch<React.SetStateAction<boolean>>
   handleSetPriorityClr: (priority: "Extreme" | "Moderate" | "Low") => string;
-  handleSetClr: (status: "Not Started" | "In Progress" | "Completed") => string
+  handleSetClr: (status: "Not Started" | "In Progress" | "Completed") => string;
+  handleViewTask: (id?: number) => void
 }
 export const UserContext = createContext<UserContextType | null>(null);
 

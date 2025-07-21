@@ -39,7 +39,7 @@ export default function Navbar() {
           }}
           className="lg:w-2xl w-full h-10 rounded shadow-md"
         />
-        <button className="bg-[#ff6767] rounded w-10 flex items-center justify-center">
+        <button className="bg-[#ff6767] rounded w-10 h-10 flex items-center justify-center">
           <Search className="text-white" />
         </button>
       </div>

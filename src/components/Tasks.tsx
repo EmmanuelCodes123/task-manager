@@ -1,5 +1,5 @@
 import { Check, Delete, Edit, Play, Square } from "lucide-react";
-import { cn } from "../lib/utils";
+  import { cn } from "../lib/utils";
 import type { TaskSchemaType } from "./auth/AuthTask";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../hooks/useUserContext";
@@ -11,7 +11,7 @@ interface TaskProps {
 }
 
 export default function Task({ task }: TaskProps) {
-  const { setTasks, tasks, handleSetClr, handleSetPriorityClr } =
+  const { setTasks, tasks, handleSetClr, handleSetPriorityClr, handleViewTask } =
     useUserContext();
   const isCompleted = task.status === "Completed";
 
@@ -77,8 +77,9 @@ export default function Task({ task }: TaskProps) {
       <div
         className={cn(
           " relative flex flex-col",
-          !isCompleted ? "w-63" : "w-45"
+          !isCompleted ? "lg:w-63 w-53" : "w-45"
         )}
+        onClick={() => handleViewTask(task.id)}
       >
         <h2 className="font-bold text-xl">{task.title}</h2>
         <div
@@ -86,7 +87,7 @@ export default function Task({ task }: TaskProps) {
             isCompleted ? "w-62" : "w-58"
           )}
         >
-          <h2 className="text-[#848485] text-sm break-words whitespace-normal line-clamp-3 w-63">
+          <h2 className="text-[#848485] text-sm break-words whitespace-normal lg:line-clamp-3 line-clamp-3 w-63">
             {task.taskInfo}
           </h2>
         </div>
