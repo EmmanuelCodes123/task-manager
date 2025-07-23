@@ -11,7 +11,13 @@ export interface UserContextType {
   setCreateTask: React.Dispatch<React.SetStateAction<boolean>>
   handleSetPriorityClr: (priority: "Extreme" | "Moderate" | "Low") => string;
   handleSetClr: (status: "Not Started" | "In Progress" | "Completed") => string;
-  handleViewTask: (id?: number) => void
+  handleViewTask: (id?: number) => void;
+  openSideBar: boolean;
+  setOpenSideBar: React.Dispatch<React.SetStateAction<boolean>>;
+  status: string[];
+  setStatus: React.Dispatch<React.SetStateAction<string[]>>;
+  priority: string[];
+  setPriority: React.Dispatch<React.SetStateAction<string[]>>;
 }
 export const UserContext = createContext<UserContextType | null>(null);
 

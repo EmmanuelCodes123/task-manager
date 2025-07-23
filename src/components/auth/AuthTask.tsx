@@ -8,22 +8,39 @@ import { useUserContext } from "../../hooks/useUserContext";
 export const TaskSchema = z.object({
   title: z.string(),
   taskInfo: z.string(),
-  priority: z.enum(["Extreme", "Moderate", "Low"]),
+  priority: z.enum(
+    localStorage.getItem("priority")
+      ? JSON.parse(localStorage.getItem("priority")!)
+      : ["Extreme", "Moderate", "Low"]
+  ),
   date: z.string(),
-  status: z.enum(["Not Started", "In Progress", "Completed"]),
+  status: z.enum(
+    localStorage.getItem("status")
+      ? JSON.parse(localStorage.getItem("status")!)
+      : ["Not Started", "In Progress", "Completed"]
+  ),
   id: z.number(),
 });
 
 const TaskFormSchema = z.object({
   title: z.string().min(1, "Title is required"),
   taskInfo: z.string().min(1, "Task information is required"),
-  priority: z.enum(["Extreme", "Moderate", "Low"], {
-    required_error: "A priority is needed",
-  }),
+  priority: z.enum(
+    localStorage.getItem("priority")
+      ? JSON.parse(localStorage.getItem("priority")!)
+      : ["Extreme", "Moderate", "Low"],
+    {
+      required_error: "A priority is needed",
+    }
+  ),
   date: z.string({
     required_error: "A date is required",
   }),
-  status: z.enum(["Not Started", "In Progress", "Completed"]),
+  status: z.enum(
+    localStorage.getItem("status")
+      ? JSON.parse(localStorage.getItem("status")!)
+      : ["Not Started", "In Progress", "Completed"]
+  ),
   id: z.number(),
 });
 

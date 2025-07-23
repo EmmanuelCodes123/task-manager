@@ -1,6 +1,7 @@
 import { AlignJustify, Search } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useUserContext } from "../hooks/useUserContext";
 
 export default function Navbar() {
   const [searchValue, setSearchValue] = useState("");
@@ -8,6 +9,7 @@ export default function Navbar() {
   const day = today.toLocaleDateString("en-GB", { weekday: "long" });
   const date = today.toLocaleDateString("en-GB");
   const location = useLocation();
+  const {setOpenSideBar} = useUserContext()
 
 
   return (
@@ -24,7 +26,7 @@ export default function Navbar() {
         )}
       </div>
       <div className="lg:hidden ">
-        <button>
+        <button onClick={() => setOpenSideBar(c => !c)}>
           <AlignJustify />
         </button>
       </div>

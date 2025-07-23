@@ -12,8 +12,6 @@ export default function OpenTasks() {
   const openTasks = tasks.filter((task) => task.status !== "Completed");
   const minimized = openTasks.slice(0, 3);
 
-  
-
   return (
     <div className="flex flex-col h-117 overflow-auto lg:shadow-2xl shadow-xl lg:w-115 w-full rounded lg:p-4 p-2 pt-0 ">
       <div className={cn("", createTask ? "lg:block hidden" : "block")}>
@@ -37,14 +35,17 @@ export default function OpenTasks() {
         )}
 
         {minimized.map((task) => (
-          <div key={task.id} >
+          <div key={task.id}>
             <Tasks task={task} />
           </div>
         ))}
         <div className="w-full flex justify-center mt-4 ">
           {minimized.length > 2 ? (
             <div className="w-full flex justify-center mt-4 ">
-              <p className="text-red-400 cursor-pointer decoration-2 hover:underline-offset-2" onClick={() => handleViewTask()}>
+              <p
+                className="text-red-400 cursor-pointer decoration-2 hover:underline-offset-2"
+                onClick={() => handleViewTask()}
+              >
                 Show All
               </p>
             </div>

@@ -1,12 +1,12 @@
-import Navbar from "./Navbar";
-import SideBar from "./SideBar";
+import Navbar from "../components/Navbar";
+import SideBar from "../components/SideBar";
 import { useUserContext } from "../hooks/useUserContext";
 import { useQueryState, parseAsInteger } from "nuqs";
-import Task from "./Tasks";
+import Task from "../components/Tasks";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "../lib/utils";
 import defaultTaskImg from "../assets/defualttaskimg.png";
-import AuthTask from "./auth/AuthTask";
+import AuthTask from "../components/auth/AuthTask";
 
 export default function ViewTasks() {
   const { tasks, createTask } = useUserContext();
@@ -28,7 +28,7 @@ export default function ViewTasks() {
     const handleResize = () => {
       const mobile = window.innerWidth < 1024;
       setIsMobileView(mobile);
-      if (!mobile) setMobileView("list"); 
+      if (!mobile) setMobileView("list");
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -58,7 +58,7 @@ export default function ViewTasks() {
       window.location.pathname.includes("/viewtask")
     ) {
       setCurrentTasks(tasks);
-      setMobileView("list"); 
+      setMobileView("list");
     }
   }, [tasks, currentTaskId]);
 
@@ -77,7 +77,6 @@ export default function ViewTasks() {
       <div className="flex">
         <SideBar />
         <div className="border-2 rounded h-screen w-screen mt-2 lg:mt-10 lg:mx-4 p-5 border-gray-200 flex flex-1 space-x-2 relative">
-          {/* Task List */}
           {(!isMobileView || mobileView === "list") && (
             <div className="w-100 h-full overflow-auto relative">
               <header className="sticky top-0 flex w-full justify-between items-center z-100">
@@ -85,7 +84,7 @@ export default function ViewTasks() {
                   className="cursor-pointer hover:text-red-400"
                   onClick={() => {
                     setCurrentTasks(tasks);
-                    setCurrentTaskId(0); 
+                    setCurrentTaskId(0);
                     if (isMobileView) setMobileView("list");
                   }}
                 >
@@ -126,7 +125,7 @@ export default function ViewTasks() {
               )}
 
               {currentTasks.length === 0 ? (
-                <p>No Tasks</p>
+                <p className=" mt-5 font-bold">No Tasks</p>
               ) : (
                 currentTasks.map((t) => (
                   <div
@@ -160,7 +159,7 @@ export default function ViewTasks() {
                     setCurrentTaskId(0);
                   }}
                 >
-                  ← Back 
+                  ← Back
                 </button>
               )}
               {currentTask ? (
