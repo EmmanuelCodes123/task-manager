@@ -18,6 +18,10 @@ export interface UserContextType {
   setStatus: React.Dispatch<React.SetStateAction<string[]>>;
   priority: string[];
   setPriority: React.Dispatch<React.SetStateAction<string[]>>;
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  editingTaskId: number | undefined;
+  setEditingTaskId: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 export const UserContext = createContext<UserContextType | null>(null);
 

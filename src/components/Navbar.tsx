@@ -13,10 +13,10 @@ export default function Navbar() {
 
 
   return (
-    <nav className="flex shadow-md lg:space-x-36 space-x-3 lg:mx-auto pt-2 pb-2 pl-4 pr-4 items-center w-screen lg:w-fit">
+    <nav className="flex shadow-md lg:space-x-36 space-x-3 lg:mx-auto pt-2 pb-2 pl-4 pr-4 items-center w-screen lg:w-fit dark:bg-white ">
       <div className="hidden lg:block">
         {location.pathname === "/" ? (
-          <h1 className="text-3xl">
+          <h1 className="text-3xl dark:text-black">
             <span className="text-[#ff6767]">Dash</span>board
           </h1>
         ) : (
@@ -39,16 +39,19 @@ export default function Navbar() {
             const value = e.target;
             setSearchValue(value.value);
           }}
-          className="lg:w-2xl w-full h-10 rounded shadow-md"
+          className="lg:w-2xl w-full h-10 rounded shadow-md dark:bg-white dark:text-white"
         />
         <button className="bg-[#ff6767] rounded w-10 h-10 flex items-center justify-center">
           <Search className="text-white" />
         </button>
       </div>
       
-      <div className="hidden lg:block">
-        <h2>{day}</h2>
-        <p>{date}</p>
+      <div className="hidden lg:flex gap-2">
+        {/* <SetTheme /> */}
+        <div className="text-black">
+          <h2>{day}</h2>
+          <p>{date}</p>
+        </div>
       </div>
     </nav>
   );

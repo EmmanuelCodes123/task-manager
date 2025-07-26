@@ -4,6 +4,8 @@ import { z } from "zod";
 import NewTask from "../NewTasx";
 import UseGeneratedId from "../../hooks/generateId";
 import { useUserContext } from "../../hooks/useUserContext";
+import { useEffect } from "react";
+
 
 export const TaskSchema = z.object({
   title: z.string(),
@@ -54,16 +56,24 @@ export type TaskFormSchemaType = z.infer<typeof TaskFormSchema>;
 export default function AuthTask({ taskId }: AuthFormProps) {
   const { tasks } = useUserContext();
   const task = tasks.find((t) => t.id === taskId);
+
   const form = useForm<TaskFormSchemaType>({
     resolver: zodResolver(TaskFormSchema),
-    defaultValues: task ?? {
-      title: "Intermediate React",
-      taskInfo:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit voluptate maxime deserunt assumenda commodi quis consequuntur dolor ea illum eius. Atque autem dolore ut eos eaque pariatur quaerat asperiores dignissimos.",
-      priority: "Extreme",
+    defaultValues: {
+      title: "",
+      taskInfo: "",
+      priority: "Moderate",
       status: "Not Started",
+      date: "",
       id: UseGeneratedId(),
     },
   });
+
+  useEffect(() => {
+    if (task) {
+      form.reset(task); // This sets the form values to the task you're editing
+    }
+  }, [taskId, task, form]);
+
   return <NewTask form={form} taskId={taskId} />;
 }

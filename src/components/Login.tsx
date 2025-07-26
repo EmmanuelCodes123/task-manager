@@ -11,8 +11,9 @@ import {
 import type { LoginSchemaType } from "./auth/AuthForm";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../hooks/useUserContext";
 
 type LoginProps = {
   form: UseFormReturn<LoginSchemaType>;
@@ -20,11 +21,8 @@ type LoginProps = {
 
 export default function Login({ form }: LoginProps) {
   const navigate = useNavigate();
-
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const storedData = localStorage.getItem("isLoggedIn");
-    return storedData ? JSON.parse(storedData) : false;
-  });
+  const { setIsLoggedIn, isLoggedIn } = useUserContext();
+ 
 
   const onSubmit = (data: LoginSchemaType) => {
     const userData = localStorage.getItem("userData");

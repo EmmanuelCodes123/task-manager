@@ -7,7 +7,7 @@ import { cn } from "../lib/utils";
 
 export default function OpenTasks() {
   const { createTask, setCreateTask, handleViewTask } = useUserContext();
-  const { tasks } = useUserContext();
+  const { tasks, editingTaskId } = useUserContext();
 
   const openTasks = tasks.filter((task) => task.status !== "Completed");
   const minimized = openTasks.slice(0, 3);
@@ -54,7 +54,9 @@ export default function OpenTasks() {
           )}
         </div>
       </div>
-      {createTask ? <AuthTask taskId={undefined} /> : ""}
+      {createTask && (
+        <AuthTask taskId={editingTaskId} />
+      )}{" "}
     </div>
   );
 }

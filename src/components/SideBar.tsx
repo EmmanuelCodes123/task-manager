@@ -7,11 +7,16 @@ import { cn } from "../lib/utils";
 
 export default function SideBar() {
   const userImage = defaultImg
-  const { userData, handleViewTask, openSideBar, setOpenSideBar } =
+  const { userData, handleViewTask, openSideBar, setOpenSideBar, setIsLoggedIn } =
     useUserContext();
   const sideBar = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
+
+  function logOut(){
+    setIsLoggedIn(false);
+    navigate("/login", { replace: true });
+  }
 
   useEffect(() => {
     if (openSideBar && sideBar.current) {
@@ -49,7 +54,7 @@ export default function SideBar() {
   return (
     <aside
       className={cn(
-        "w-67 mt-10 rounded-xl bg-black text-white p-3 absolute left-0 top-11 bottom-0 z-300 lg:relative lg:top-0",
+        "w-67 mt-10 rounded-xl bg-black dark:bg-white dark:text-black text-white p-3 absolute left-0 top-11 bottom-0 z-300 lg:relative lg:top-0",
         "transition-transform duration-300 ease-in-out"
       )}
       ref={sideBar}
@@ -88,7 +93,7 @@ export default function SideBar() {
       </div>
 
       <div>
-        <button className="flex items-center gap-2 cursor-pointer absolute bottom-5 left-3 text-lg hover:text-red-400">
+        <button className="flex items-center gap-2 cursor-pointer absolute bottom-5 left-3 text-lg hover:text-red-400" onClick={() => logOut()}>
           <LogOut /> Logout
         </button>
       </div>

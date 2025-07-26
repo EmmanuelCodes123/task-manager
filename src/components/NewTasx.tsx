@@ -22,7 +22,7 @@ type NewFormProps = {
 };
 
 export default function NewTask({ form, taskId }: NewFormProps) {
-  const { setTasks, setCreateTask, tasks, createTask } = useUserContext();
+  const { setTasks, setCreateTask, tasks, createTask, setEditingTaskId } = useUserContext();
 
   function onSubmit(data: TaskFormSchemaType) {
     const parsedFormData = TaskSchema.safeParse(data);
@@ -38,13 +38,14 @@ export default function NewTask({ form, taskId }: NewFormProps) {
         console.log("success");
         setCreateTask(false);
         console.log(createTask);
-        
       }
       setCreateTask(false);
     } else {
       console.log("not parsed", parsedFormData);
     }
   }
+
+  console.log(taskId);
 
   return (
     <div className="w-full h-screen absolute right-0 left-0 top-0 bottom-0 z-200 flex items-center justify-center">
@@ -57,7 +58,7 @@ export default function NewTask({ form, taskId }: NewFormProps) {
             className="cursor-pointer"
             onClick={() => {
               setCreateTask(false);
-              console.log(createTask);
+              setEditingTaskId(undefined);
             }}
           >
             Go Back

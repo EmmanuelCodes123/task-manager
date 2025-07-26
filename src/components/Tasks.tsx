@@ -1,9 +1,8 @@
 import { Check, Delete, Edit, Play, Square } from "lucide-react";
-  import { cn } from "../lib/utils";
+import { cn } from "../lib/utils";
 import type { TaskSchemaType } from "./auth/AuthTask";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../hooks/useUserContext";
-import AuthTask from "./auth/AuthTask";
 import defaultTaskImg from "../assets/defualttaskimg.png";
 
 interface TaskProps {
@@ -11,11 +10,17 @@ interface TaskProps {
 }
 
 export default function Task({ task }: TaskProps) {
-  const { setTasks, tasks, handleSetClr, handleSetPriorityClr, handleViewTask } =
-    useUserContext();
+  const {
+    setTasks,
+    tasks,
+    handleSetClr,
+    handleSetPriorityClr,
+    handleViewTask,
+    setCreateTask,
+    setEditingTaskId,
+  } = useUserContext();
   const isCompleted = task.status === "Completed";
 
-  const [createTask, setCreateTask] = useState<boolean>();
   const [showOptions, setShowOptions] = useState(false);
   const [statusIcon, setStatusIcon] = useState(<Play color="red" />);
 
@@ -25,20 +30,18 @@ export default function Task({ task }: TaskProps) {
   }
 
   useEffect(() => {
-      switch (task.status) {
-        case "Not Started":
-          setStatusIcon(<Play color="red" />);
-          break;
-        case "In Progress":
-          setStatusIcon(<Square color="orange" />);
-          break;
-        case "Completed":
-          setStatusIcon(<Check color="green" />);
-          break;
-      }
-  }, [task])
-    
-  
+    switch (task.status) {
+      case "Not Started":
+        setStatusIcon(<Play color="red" />);
+        break;
+      case "In Progress":
+        setStatusIcon(<Square color="orange" />);
+        break;
+      case "Completed":
+        setStatusIcon(<Check color="green" />);
+        break;
+    }
+  }, [task]);
 
   function handleStatus(id: number, status: string) {
     switch (status) {
@@ -69,7 +72,6 @@ export default function Task({ task }: TaskProps) {
       className="flex mt-5 border-1 border-[#848485] rounded-xl min-h-33 p-1 max-w-100"
       key={task.id}
     >
-      {createTask && <AuthTask taskId={task.id} />}
       <div className="w-4 flex jutify-center">
         <p className={cn("", handleSetClr?.(task.status))}>o</p>
       </div>
@@ -121,7 +123,10 @@ export default function Task({ task }: TaskProps) {
           <div className="w-25 flex justify-center items-center space-x-2 p-1 shadow-md drop-shadow-md absolute right-0 top-5 bg-white">
             <button
               className="w-5 h-full cursor-pointer"
-              onClick={() => setCreateTask(true)}
+              onClick={() => {
+                setEditingTaskId(task.id);
+                setCreateTask(true);
+              }}
             >
               <Edit className="w-full h-full" />
             </button>

@@ -1,4 +1,4 @@
-import {useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { UserSchemaType } from "../components/auth/UserAuth";
 import { UserContext } from "./useUserContext";
 import type { TaskSchemaType } from "../components/auth/AuthTask";
@@ -28,7 +28,7 @@ export default function UseProvider({
       ? JSON.parse(statusData)
       : ["Not Started", "In Progress", "Completed"];
   });
-  
+
   const [priority, setPriority] = useState(() => {
     const priorityData = localStorage.getItem("priority");
     return priorityData
@@ -36,12 +36,21 @@ export default function UseProvider({
       : ["Extreme", "Moderate", "Low"];
   });
 
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const storedData = localStorage.getItem("isLoggedIn");
+    return storedData ? JSON.parse(storedData) : false;
+  });
+
+  const [editingTaskId, setEditingTaskId] = useState<number | undefined>(undefined);
+
+
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
     localStorage.setItem("priority", JSON.stringify(priority));
     localStorage.setItem("status", JSON.stringify(status));
     localStorage.setItem("userData", JSON.stringify(userData));
-  }, [tasks, priority, status, userData]);
+    localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
+  }, [tasks, priority, status, userData, isLoggedIn]);
 
   function handleSetClr(status: "Not Started" | "In Progress" | "Completed") {
     switch (status) {
@@ -87,6 +96,10 @@ export default function UseProvider({
         setStatus,
         priority,
         setPriority,
+        isLoggedIn,
+        setIsLoggedIn,
+        editingTaskId,
+        setEditingTaskId,
       }}
     >
       {children}
