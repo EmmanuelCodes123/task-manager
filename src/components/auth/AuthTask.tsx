@@ -62,7 +62,7 @@ export default function AuthTask({ taskId }: AuthFormProps) {
     defaultValues: {
       title: "",
       taskInfo: "",
-      priority: "Moderate",
+      priority: "Extreme",
       status: "Not Started",
       date: "",
       id: UseGeneratedId(),

@@ -44,9 +44,6 @@ export default function NewTask({ form, taskId }: NewFormProps) {
       console.log("not parsed", parsedFormData);
     }
   }
-
-  console.log(taskId);
-
   return (
     <div className="w-full h-screen absolute right-0 left-0 top-0 bottom-0 z-200 flex items-center justify-center">
       <div className="hidden lg:block w-full h-full absolute bg-black opacity-50 z-50"></div>

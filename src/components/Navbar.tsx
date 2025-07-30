@@ -1,16 +1,43 @@
-import { AlignJustify, Search } from "lucide-react";
-import { useState } from "react";
+import { AlignJustify } from "lucide-react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { useLocation } from "react-router-dom";
 import { useUserContext } from "../hooks/useUserContext";
+import type { TaskSchemaType } from "./auth/AuthTask";
 
-export default function Navbar() {
+interface NavbarProps {
+  setCurrentTasks?: Dispatch<SetStateAction<TaskSchemaType[]>>;
+}
+
+export default function Navbar({ setCurrentTasks }: NavbarProps) {
   const [searchValue, setSearchValue] = useState("");
   const today = new Date();
   const day = today.toLocaleDateString("en-GB", { weekday: "long" });
   const date = today.toLocaleDateString("en-GB");
   const location = useLocation();
-  const {setOpenSideBar} = useUserContext()
+  const { setOpenSideBar, tasks } = useUserContext();
 
+  const handleSearch = useCallback(() => {
+    if (setCurrentTasks) {
+      setCurrentTasks(() =>
+        tasks.filter((task) =>
+          task.title.toLowerCase().includes(searchValue.toLowerCase())
+        )
+      );
+      if (searchValue.trim() === "") {
+        setCurrentTasks(tasks);
+      }
+    }
+  }, [searchValue, setCurrentTasks, tasks]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [handleSearch]);
 
   return (
     <nav className="flex shadow-md lg:space-x-36 space-x-3 lg:mx-auto pt-2 pb-2 pl-4 pr-4 items-center w-screen lg:w-fit dark:bg-white ">
@@ -26,7 +53,7 @@ export default function Navbar() {
         )}
       </div>
       <div className="lg:hidden ">
-        <button onClick={() => setOpenSideBar(c => !c)}>
+        <button onClick={() => setOpenSideBar((c) => !c)}>
           <AlignJustify />
         </button>
       </div>
@@ -36,16 +63,13 @@ export default function Navbar() {
           type="text"
           value={searchValue}
           onChange={(e) => {
-            const value = e.target;
-            setSearchValue(value.value);
+            setSearchValue(e.target.value);
           }}
           className="lg:w-2xl w-full h-10 rounded shadow-md dark:bg-white dark:text-white"
         />
-        <button className="bg-[#ff6767] rounded w-10 h-10 flex items-center justify-center">
-          <Search className="text-white" />
-        </button>
+        
       </div>
-      
+
       <div className="hidden lg:flex gap-2">
         {/* <SetTheme /> */}
         <div className="text-black">

@@ -75,7 +75,7 @@ export default function ViewTasks() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar setCurrentTasks={setCurrentTasks} />
       <div className="flex">
         <SideBar />
         <div className="border-2 rounded h-screen w-100 mt-2 lg:mt-10 lg:mx-4 p-2 lg:p-5 border-gray-200 flex flex-1 space-x-2 relative">
