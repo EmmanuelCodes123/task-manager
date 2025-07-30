@@ -35,9 +35,7 @@ const TaskFormSchema = z.object({
       required_error: "A priority is needed",
     }
   ),
-  date: z.string({
-    required_error: "A date is required",
-  }),
+  date: z.string().min(1, "Date is required"),
   status: z.enum(
     localStorage.getItem("status")
       ? JSON.parse(localStorage.getItem("status")!)
@@ -71,7 +69,7 @@ export default function AuthTask({ taskId }: AuthFormProps) {
 
   useEffect(() => {
     if (task) {
-      form.reset(task); // This sets the form values to the task you're editing
+      form.reset(task); 
     }
   }, [taskId, task, form]);
 

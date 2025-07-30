@@ -6,7 +6,7 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useUserContext } from "../hooks/useUserContext";
 import type { TaskSchemaType } from "./auth/AuthTask";
 
@@ -21,6 +21,7 @@ export default function Navbar({ setCurrentTasks }: NavbarProps) {
   const date = today.toLocaleDateString("en-GB");
   const location = useLocation();
   const { setOpenSideBar, tasks } = useUserContext();
+  const navigate = useNavigate();
 
   const handleSearch = useCallback(() => {
     if (setCurrentTasks) {
@@ -65,9 +66,9 @@ export default function Navbar({ setCurrentTasks }: NavbarProps) {
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}
+          onClick={() => navigate("/viewtask")}
           className="lg:w-2xl w-full h-10 rounded shadow-md dark:bg-white dark:text-white"
         />
-        
       </div>
 
       <div className="hidden lg:flex gap-2">

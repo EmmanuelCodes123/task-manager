@@ -11,9 +11,10 @@ import {
 import type { LoginSchemaType } from "./auth/AuthForm";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../hooks/useUserContext";
+import Success from "./Success";
 
 type LoginProps = {
   form: UseFormReturn<LoginSchemaType>;
@@ -22,7 +23,7 @@ type LoginProps = {
 export default function Login({ form }: LoginProps) {
   const navigate = useNavigate();
   const { setIsLoggedIn, isLoggedIn } = useUserContext();
- 
+  const [showMessage, setShowMessage] = useState(false);
 
   const onSubmit = (data: LoginSchemaType) => {
     const userData = localStorage.getItem("userData");
@@ -36,7 +37,8 @@ export default function Login({ form }: LoginProps) {
         setIsLoggedIn(true);
         navigate("/");
       } else {
-        console.error("Invalid username or password");
+        console.log("Invalid credentials");
+        setShowMessage(true);
       }
     }
   };
@@ -44,6 +46,13 @@ export default function Login({ form }: LoginProps) {
   useEffect(() => {
     localStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
   });
+
+  useEffect(() => {
+    if (showMessage) {
+      const timer = setTimeout(() => setShowMessage(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showMessage]);
 
   return (
     <div className="flex m-auto mt-10 h-130 w-250 bg-gray-100 rounded gap-3">
@@ -98,6 +107,11 @@ export default function Login({ form }: LoginProps) {
           </div>
         </form>
       </Form>
+      {showMessage && (
+        <Success
+          message="Invalid credentials, please try again."
+        />
+      )}
     </div>
   );
 }

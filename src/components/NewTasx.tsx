@@ -22,7 +22,8 @@ type NewFormProps = {
 };
 
 export default function NewTask({ form, taskId }: NewFormProps) {
-  const { setTasks, setCreateTask, tasks, createTask, setEditingTaskId } = useUserContext();
+  const { setTasks, setCreateTask, tasks, createTask, setEditingTaskId } =
+    useUserContext();
 
   function onSubmit(data: TaskFormSchemaType) {
     const parsedFormData = TaskSchema.safeParse(data);
@@ -159,25 +160,6 @@ export default function NewTask({ form, taskId }: NewFormProps) {
                 {taskId !== undefined ? "Update Task" : "Create Task"}
               </Button>
             </div>
-            {/* <div className="flex-1 h-fit mt-auto mb-14 flex p-1 rounded-lg justify-end border-1 border-[#99a1af] flex-col  bottom-0 right-0 ml-1">
-              <header>
-                <h2 className="font-bold">Upload Image</h2>
-              </header>
-              <div className="inline-block w-25 h-25">
-                <Image className="w-full h-full" />
-              </div>
-              <FormField
-                control={form.control}
-                name="image"
-                render={() => (
-                  <FormItem>
-                    <FormControl className="border-0">
-                      <Input type="file" className="w-full " />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div> */}
           </form>
         </Form>
       </div>
